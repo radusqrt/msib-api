@@ -37,7 +37,6 @@ class Home(Resource):
 class FileUpload(Resource):
     def post(self):
         if 'file' not in request.files:
-            flash('No file part')
             return redirect(request.url)
         file = request.files['file']
         if file.filename == '':
