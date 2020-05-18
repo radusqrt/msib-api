@@ -29,6 +29,11 @@ cors = CORS(app)
 #         return {'you sent': some_json}, 201
 
 
+class Home(Resource):
+    def get(self):
+        return 'I am just an API'
+
+
 class FileUpload(Resource):
     def post(self):
         if 'file' not in request.files:
@@ -45,6 +50,7 @@ class FileUpload(Resource):
 
 
 api.add_resource(FileUpload, '/upload')
+api.add_resource(Home, '/')
 
 if __name__ == '__main__':
     app.run(debug=True)
