@@ -7,7 +7,7 @@ api = Api(app)
 
 class HelloWorld(Resource):
     def get(self):
-        return "<h1>YES</h1>"
+        return '<h1>I am just an API</h1>'
 
     def post(self):
         some_json = request.get_json()
