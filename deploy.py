@@ -35,17 +35,13 @@ class FileUpload(Resource):
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        print(file)
-        # if user does not select file, browser also
-        # submit an empty part without filename
         if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
+            return "No file chosen", 400
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            print(filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return {'fileName': filename}, 200
+        return "Files should be only .csv, .xls or .xlsx.", 400
 
 
 api.add_resource(FileUpload, '/upload')
