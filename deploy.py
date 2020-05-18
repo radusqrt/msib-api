@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
+import csv
 
 UPLOAD_FOLDER = './uploads/'
 ALLOWED_EXTENSIONS = {'xls', 'xlsx', 'csv'}
@@ -43,7 +44,11 @@ class FileUpload(Resource):
             return "No file chosen", 400
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join("/", "app", filename))
+            file.save(filename)
+            with open(filename, 'r') as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    print(row)
             return {'fileName': filename}, 200
         return "Files should be only .csv, .xls or .xlsx.", 400
 
