@@ -43,7 +43,7 @@ class FileUpload(Resource):
             return "No file chosen", 400
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(filename)
+            file.save(os.path.join("/", "app", filename))
             return {'fileName': filename}, 200
         return "Files should be only .csv, .xls or .xlsx.", 400
 
