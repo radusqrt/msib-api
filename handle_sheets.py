@@ -13,7 +13,7 @@ def handle_df(df):
     dfs['adn'] = df[df['ADN'] == 'DA']
     dfs['imunitate'] = df[df['Imunitate'] == 'DA']
 
-    sampled_dfs = {key: dfs[key].sample(2) for key in dfs}
+    sampled_dfs = {key: dfs[key].sample(3) for key in dfs}
 
     response = {key: [sampled_dfs[key].iloc[idx].to_dict()
                       for idx in range(sampled_dfs[key].shape[0])] for key in sampled_dfs}
