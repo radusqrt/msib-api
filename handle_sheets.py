@@ -29,6 +29,3 @@ def handle_xlsx(filename):
 def handle_csv(filename):
     df = pd.read_csv(filename)
     return handle_df(df)
-
-
-handle_xlsx('Mananca si invinge boala.xlsx')
