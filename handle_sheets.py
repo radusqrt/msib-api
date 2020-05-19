@@ -2,8 +2,7 @@ import pandas as pd
 
 
 def handle_df(df):
-    # df = df[df['Iti place'] == 'DA']
-    df = df[df['Iti place'] == 'NU']
+    df = df[df['Iti place'] == 'DA']
 
     dfs = {}
     dfs['angio'] = df[(df['Antiangiogeneza'] == 'DA')
