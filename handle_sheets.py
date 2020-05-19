@@ -16,7 +16,7 @@ def handle_df(df):
         try:
             sampled_dfs = {key: dfs[key].sample(3) for key in dfs}
         except:
-            return "E nevoie de cel puțin trei alimente din fiecare tip", 400
+            return "E nevoie de cel puțin trei alimente din fiecare tip", 501
 
         response = {key: [sampled_dfs[key].iloc[idx].to_dict()
                           for idx in range(sampled_dfs[key].shape[0])] for key in sampled_dfs}

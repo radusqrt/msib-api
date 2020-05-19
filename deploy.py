@@ -43,7 +43,6 @@ class FileUpload(Resource):
             response, code = handle_xlsx(
                 filename) if real_filename[-4:] == 'xlsx' else handle_csv(filename)
             os.remove(filename)
-            print(response, code)
             return response, code
         return "Fișierele trebuie să fie .csv sau .xlsx", 400
 
