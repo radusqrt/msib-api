@@ -34,7 +34,7 @@ class FileUpload(Resource):
             return redirect(request.url)
         file = request.files['file']
         if file.filename == '':
-            return "No file chosen", 400
+            return "Niciun fișier ales", 400
         if file and allowed_file(file.filename):
             real_filename = secure_filename(file.filename)
             # TODO: handle extensions
@@ -43,8 +43,9 @@ class FileUpload(Resource):
             response, code = handle_xlsx(
                 filename) if real_filename[-4:] == 'xlsx' else handle_csv(filename)
             os.remove(filename)
+            print(response, code)
             return response, code
-        return "Files should be only .csv, or .xlsx.", 400
+        return "Fișierele trebuie să fie .csv sau .xlsx.", 400
 
 
 api.add_resource(FileUpload, '/upload')

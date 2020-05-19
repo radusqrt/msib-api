@@ -20,14 +20,14 @@ def handle_df(df):
     response = {key: [sampled_dfs[key].iloc[idx].to_dict()
                       for idx in range(sampled_dfs[key].shape[0])] for key in sampled_dfs}
 
-    return response
+    return response, 200
 
 
 def handle_xlsx(filename):
     df = list(pd.read_excel(filename, sheet_name=None).values())[0]
-    return handle_df(df), 200
+    return handle_df(df)
 
 
 def handle_csv(filename):
     df = pd.read_csv(filename)
-    return handle_df(df), 200
+    return handle_df(df)
