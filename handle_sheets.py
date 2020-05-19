@@ -23,7 +23,7 @@ def handle_df(df):
 
         return response, 200
     except:
-        return "Eroare necunoscută", 204
+        return "Cerere neimplementată", 501
 
 
 def handle_xlsx(filename):
