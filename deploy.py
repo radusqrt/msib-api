@@ -40,10 +40,10 @@ class FileUpload(Resource):
             # TODO: handle extensions
             filename = str(uuid.uuid4())
             file.save(filename)
-            response = handle_xlsx(
+            response, code = handle_xlsx(
                 filename) if real_filename[-4:] == 'xlsx' else handle_csv(filename)
             os.remove(filename)
-            return response, 200
+            return response, code
         return "Files should be only .csv, or .xlsx.", 400
 
 

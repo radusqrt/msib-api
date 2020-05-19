@@ -12,7 +12,10 @@ def handle_df(df):
     dfs['adn'] = df[df['ADN'] == 'DA']
     dfs['imunitate'] = df[df['Imunitate'] == 'DA']
 
-    sampled_dfs = {key: dfs[key].sample(3) for key in dfs}
+    try:
+        sampled_dfs = {key: dfs[key].sample(3) for key in dfs}
+    except:
+        return "E nevoie de cel puțin trei alimente din fiecare tip", 400
 
     response = {key: [sampled_dfs[key].iloc[idx].to_dict()
                       for idx in range(sampled_dfs[key].shape[0])] for key in sampled_dfs}
@@ -22,9 +25,9 @@ def handle_df(df):
 
 def handle_xlsx(filename):
     df = list(pd.read_excel(filename, sheet_name=None).values())[0]
-    return handle_df(df)
+    return handle_df(df), 200
 
 
 def handle_csv(filename):
     df = pd.read_csv(filename)
-    return handle_df(df)
+    return handle_df(df), 200
