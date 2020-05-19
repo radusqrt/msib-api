@@ -4,9 +4,11 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 import csv
+import uuid
+from handle_sheets import handle_csv, handle_xlsx
 
 UPLOAD_FOLDER = './uploads/'
-ALLOWED_EXTENSIONS = {'xls', 'xlsx', 'csv'}
+ALLOWED_EXTENSIONS = {'xlsx', 'csv'}
 
 
 def allowed_file(filename):
@@ -19,15 +21,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['CORS_HEADERS'] = 'Content-Type'
 api = Api(app)
 cors = CORS(app)
-
-
-# class HelloWorld(Resource):
-#     def get(self):
-#         return {}
-
-#     def post(self):
-#         some_json = request.get_json()
-#         return {'you sent': some_json}, 201
 
 
 class Home(Resource):
@@ -43,14 +36,15 @@ class FileUpload(Resource):
         if file.filename == '':
             return "No file chosen", 400
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            real_filename = secure_filename(file.filename)
+            # TODO: handle extensions
+            filename = str(uuid.uuid4())
             file.save(filename)
-            with open(filename, 'r') as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    print(row)
-            return {'fileName': filename}, 200
-        return "Files should be only .csv, .xls or .xlsx.", 400
+            response = handle_xlsx(
+                filename) if real_filename[-4:] == 'xlsx' else handle_csv(filename)
+            os.remove(filename)
+            return response, 200
+        return "Files should be only .csv, or .xlsx.", 400
 
 
 api.add_resource(FileUpload, '/upload')
