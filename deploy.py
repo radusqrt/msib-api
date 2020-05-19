@@ -45,7 +45,7 @@ class FileUpload(Resource):
             os.remove(filename)
             print(response, code)
             return response, code
-        return "Fișierele trebuie să fie .csv sau .xlsx.", 400
+        return "Fișierele trebuie să fie .csv sau .xlsx", 400
 
 
 api.add_resource(FileUpload, '/upload')
